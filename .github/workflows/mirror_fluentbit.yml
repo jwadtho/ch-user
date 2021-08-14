@@ -1,0 +1,43 @@
+
+
+name: Mirror Fluentbit Image to ACR
+
+on:
+  workflow_dispatch:
+
+env:
+  REGION_ID: cn-shanghai
+  ACR_EE_REGISTRY: xom-ecomm-acr02-registry.cn-shanghai.cr.aliyuncs.com
+  ACR_EE_INSTANCE_ID: cri-3fynibeigjxpi5o6
+  ACR_EE_NAMESPACE: fluent
+  ACR_EE_IMAGE: fluent-bit
+  VERSION: 1.8.3
+  SOURCE_IMAGE: fluent/fluent-bit
+jobs:
+  pull-push:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Pull Datadog Agent Image
+      run: docker pull $SOURCE_IMAGE:$VERSION
+
+    - name: Docker Tag
+      run: docker tag $SOURCE_IMAGE:$VERSION $ACR_EE_REGISTRY/$ACR_EE_NAMESPACE/$ACR_EE_IMAGE:$VERSION
+
+    - name: Login to ACR EE with the AccessKey pair
+      uses: aliyun/acr-login@v1
+      with:
+        login-server: "https://${{ env.ACR_EE_REGISTRY }}"
+        region-id: "${{ env.REGION_ID }}"
+        access-key-id: "${{ secrets.ALICLOUD_ACCESS_KEY }}"
+        access-key-secret: "${{ secrets.ALICLOUD_SECRET_KEY }}"
+        instance-id: "${{ env.ACR_EE_INSTANCE_ID }}"
+
+    - name: Build and push image to ACR EE
+      run: |
+        docker push "$ACR_EE_REGISTRY/$ACR_EE_NAMESPACE/$ACR_EE_IMAGE:$VERSION"
+
+ 
