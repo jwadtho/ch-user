@@ -1,6 +1,6 @@
 
 
-name: Mirror Datadog Agent Image to ACR
+name: Mirror Datadog Cluster Agent Image to ACR
 
 on:
   workflow_dispatch:
@@ -10,9 +10,9 @@ env:
   ACR_EE_REGISTRY: xom-ecomm-acr02-registry.cn-shanghai.cr.aliyuncs.com
   ACR_EE_INSTANCE_ID: cri-3fynibeigjxpi5o6
   ACR_EE_NAMESPACE: datadog
-  ACR_EE_IMAGE: agent
-  VERSION: 7.29.1
-  SOURCE_IMAGE: datadog/agent
+  ACR_EE_IMAGE: cluster-agent
+  VERSION: 1.14.0
+  SOURCE_IMAGE: datadog/cluster-agent
 jobs:
   pull-push:
 
