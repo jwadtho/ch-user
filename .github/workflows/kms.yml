@@ -1,4 +1,4 @@
-name: Build And Deploy To Dev
+name: KMS
 on:
   workflow_dispatch:
 
