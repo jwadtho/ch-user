@@ -1,0 +1,49 @@
+# This workflow will build a package using Maven and then publish it to GitHub packages when a release is created
+# For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#apache-maven-with-a-settings-path
+
+name: Build - Webhook
+on:
+#   push:
+#     branches: [ main ]
+  workflow_dispatch:
+
+env:
+  REGION_ID: cn-shanghai
+  ACR_EE_REGISTRY: xom-ecomm-acr02-registry.cn-shanghai.cr.aliyuncs.com
+  ACR_EE_INSTANCE_ID: cri-3fynibeigjxpi5o6
+  ACR_EE_NAMESPACE: tootest
+  ACR_EE_IMAGE: webhook
+  
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.17
+  
+
+     - name: Login to ACR EE with the AccessKey pair
+      uses: aliyun/acr-login@v1
+      with:
+        login-server: "https://${{ env.ACR_EE_REGISTRY }}"
+        region-id: "${{ env.REGION_ID }}"
+        access-key-id: "${{ secrets.ALICLOUD_ACCESS_KEY }}"
+        access-key-secret: "${{ secrets.ALICLOUD_SECRET_KEY }}"
+        instance-id: "${{ env.ACR_EE_INSTANCE_ID }}"
+        
+    - name: Build and Push to ACR
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: "${{ env.ACR_EE_REGISTRY }}/${{ env.ACR_EE_NAMESPACE }}/${{ env.ACR_EE_IMAGE }}:${{ github.sha }}"
+   
+
+   
+
+    
