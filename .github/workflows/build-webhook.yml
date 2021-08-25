@@ -39,7 +39,7 @@ jobs:
     - name: Build and Push to ACR
       uses: docker/build-push-action@v2
       with:
-        context: /webhook
+        context: ./webhook
         push: true
         tags: "${{ env.ACR_EE_REGISTRY }}/${{ env.ACR_EE_NAMESPACE }}/${{ env.ACR_EE_IMAGE }}:${{ github.sha }}"
 
