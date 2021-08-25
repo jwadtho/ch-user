@@ -1,0 +1,34 @@
+name: Build And Deploy To Dev
+on:
+  workflow_dispatch:
+
+
+env:
+  
+  
+  ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+
+jobs:
+  deploy:
+    name: Build And Deploy To Dev
+    
+    steps:
+
+    
+     
+
+      - name: Setup aliyun cli with credential
+        uses: hughcube/aliyun-cli-action@1.0.1
+        with:
+          access-key-id: "${{ secrets.ALICLOUD_ACCESS_KEY }}"
+          access-key-secret: "${{ secrets.ALICLOUD_SECRET_KEY }}"
+          region: "${{ env.REGION_ID }}"
+
+      - name: Run KMS
+        run: |
+          eho "Hi Too"
+          SECRETJSON=$(aliyun kms GetSecretValue --SecretName XOM-ECOMM-BCS-NONPROD-KMS001-xom-app --VersionId v1)
+          echo "BCS-NONPROD-KMS001-xom-app:$SECRETJSON"
+
+   
+
