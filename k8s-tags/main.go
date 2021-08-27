@@ -13,11 +13,13 @@ import (
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/util/homedir"
 	learnK8SContainer "learn-k8s/container"
+	learnK8SFile "learn-k8s/file"
 	"os"
 	"path/filepath"
 	"strings"
 )
 
+const fileName = "output-stdout.conf"
 
 var config *rest.Config
 var clientSet *kubernetes.Clientset
@@ -80,36 +82,41 @@ func main() {
 		containers := pod.Spec.Containers
 		appContainer, _ := GetAppContainer(containers)
 
+		var tags []string
 		imageName, shortImage, imageTag, err := learnK8SContainer.SplitImageName(appContainer.Image)
 		if err != nil {
 			fmt.Errorf("cannot split %s: %s", appContainer.Image, err)
 			os.Exit(-1)
 		}
-		fmt.Printf("cluster_name:%s\n", pod.ClusterName)
-		fmt.Printf("kube_namespace:%s\n", pod.Namespace)
 
-		//
 
-		fmt.Println("display_container_name:", fmt.Sprintf("%s_%s", appContainer.Name, pod.Name))
-		//fmt.Printf("Container image:%s\n", appContainer.Image)
-		fmt.Printf("container_name:%s\n", appContainer.Name)
-		fmt.Printf("image_name:%s\n", imageName)
-		fmt.Printf("short_image:%s\n", shortImage)
-		fmt.Printf("image_tag:%s\n", imageTag)
-		fmt.Printf("docker_image:%s\n", fmt.Sprintf("%s:%s", imageName, imageTag))
-		fmt.Printf("cloud_provider:alibaba")
+		tags = append(tags, "cluster_name:" + pod.ClusterName)
+		tags = append(tags, "kube_namespace:" + pod.Namespace)
 
-		s := "k1=v1; k2=v2; k3=v3"
+		//fmt.Printf("cluster_name:%s\n", pod.ClusterName)
+		//fmt.Printf("kube_namespace:%s\n", pod.Namespace)
+		//fmt.Println("display_container_name:", fmt.Sprintf("%s_%s", appContainer.Name, pod.Name))
+		////fmt.Printf("Container image:%s\n", appContainer.Image)
+		//fmt.Printf("container_name:%s\n", appContainer.Name)
+		//fmt.Printf("image_name:%s\n", imageName)
+		//fmt.Printf("short_image:%s\n", shortImage)
+		//fmt.Printf("image_tag:%s\n", imageTag)
+		//fmt.Printf("docker_image:%s\n", fmt.Sprintf("%s:%s", imageName, imageTag))
+		//fmt.Printf("cloud_provider:alibaba")
 
-		entries := strings.Split(s, "; ")
+		tags = append(tags, "display_container_name:" + fmt.Sprintf("%s_%s", appContainer.Name, pod.Name))
+		tags = append(tags, "container_name:" + appContainer.Name)
+		tags = append(tags, "image_name:" + imageName)
+		tags = append(tags, "short_image:" + shortImage)
+		tags = append(tags, "image_tag:" + imageTag)
+		tags = append(tags, "docker_image:" + fmt.Sprintf("%s:%s", imageName, imageTag))
+		tags = append(tags, "cloud_provider:" + "alibaba")
 
-		m := make(map[string]string)
-		for _, e := range entries {
-			parts := strings.Split(e, "=")
-			m[parts[0]] = parts[1]
-		}
 
-		fmt.Println(m)
+
+		//learnK8SFile.ReadFile(strings.Join(tags, ","), fileName)
+		fmt.Printf("K8S Tags:" + strings.Join(tags, ","))
+		learnK8SFile.AppendFile(strings.Join(tags, ","), fileName)
 	}
 
 }
