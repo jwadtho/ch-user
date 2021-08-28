@@ -112,6 +112,7 @@ func main() {
 		tags = append(tags, "image_tag:" + imageTag)
 		tags = append(tags, "docker_image:" + fmt.Sprintf("%s:%s", imageName, imageTag))
 		tags = append(tags, "cloud_provider:" + "alibaba")
+		tags = append(tags, "host:" + "datadog-agent-78b568f767-z2z2x")
 
 
 
