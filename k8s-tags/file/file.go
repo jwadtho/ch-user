@@ -7,6 +7,16 @@ import (
 	"os"
 )
 
+func CheckFileExists(filename string) bool {
+	if _, err := os.Stat(filename); err == nil {
+		fmt.Printf("File exists:%s\n", filename)
+		return true
+	}
+	fmt.Printf("File does not exist:%s\n", filename)
+	return false
+
+}
+
 func ReadFile(tags string, filename string) string {
 	data, err := ioutil.ReadFile(filename)
 	if err != nil {

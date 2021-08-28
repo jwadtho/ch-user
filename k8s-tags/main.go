@@ -116,7 +116,10 @@ func main() {
 
 		//learnK8SFile.ReadFile(strings.Join(tags, ","), fileName)
 		fmt.Printf("K8S Tags:" + strings.Join(tags, ","))
-		learnK8SFile.AppendFile(strings.Join(tags, ","), fileName)
+		if learnK8SFile.CheckFileExists(fileName) {
+			learnK8SFile.AppendFile(strings.Join(tags, ","), fileName)
+		}
+
 	}
 
 }
