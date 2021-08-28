@@ -15,5 +15,6 @@ FROM alpine:3.14.1 as runtime
 COPY --from=build-env /k8s-tags /usr/local/bin/k8s-tags
 RUN chmod +x /usr/local/bin/k8s-tags
 COPY output-datadog.conf .
+RUN mkdir "dd-output-config"
 
 ENTRYPOINT ["k8s-tags"]
