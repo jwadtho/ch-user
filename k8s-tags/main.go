@@ -117,7 +117,7 @@ func main() {
 
 		//learnK8SFile.ReadFile(strings.Join(tags, ","), fileName)
 		fmt.Printf("K8S Tags:" + strings.Join(tags, ",")+"\n")
-		if learnK8SFile.CheckFileExists(fileName) {
+		if learnK8SFile.CheckFileExists(fileName) && learnK8SFile.CheckFileExists("parsers.conf") && learnK8SFile.CheckFileExists("fluent-bit.conf") {
 			//learnK8SFile.AppendFile(strings.Join(tags, ","), fileName)
 			learnK8SFile.CreateDirectoryIfNotExists(outputFolder)
 			learnK8SFile.WriteFile(outputFolder+"/"+fileName, learnK8SFile.ReadFile(strings.Join(tags, ","), fileName))
