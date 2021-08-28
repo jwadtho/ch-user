@@ -20,7 +20,7 @@ import (
 )
 
 const fileName = "output-datadog.conf"
-const outputFolder = "dd-output"
+const outputFolder = "dd-output-config"
 
 var config *rest.Config
 var clientSet *kubernetes.Clientset
@@ -119,9 +119,10 @@ func main() {
 		fmt.Printf("K8S Tags:" + strings.Join(tags, ",")+"\n")
 		if learnK8SFile.CheckFileExists(fileName) {
 			//learnK8SFile.AppendFile(strings.Join(tags, ","), fileName)
-			//learnK8SFile.CreateACopyOfFile(fileName, outputFolder+"/"+fileName)
 			learnK8SFile.CreateDirectoryIfNotExists(outputFolder)
 			learnK8SFile.WriteFile(outputFolder+"/"+fileName, learnK8SFile.ReadFile(strings.Join(tags, ","), fileName))
+			learnK8SFile.CreateACopyOfFile("parsers.conf", outputFolder+"/"+"parsers.conf")
+			learnK8SFile.CreateACopyOfFile("fluent-bit.conf", outputFolder+"/"+"fluent-bit.conf")
 
 		} else {
 			learnK8SFile.GetCurrentDirectory()
