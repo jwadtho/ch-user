@@ -71,6 +71,7 @@ func main() {
 	// - And/or cast to StatusError and use its properties like e.g. ErrStatus.Message
 	namespace := kubeNamespace
 	pod, err := clientSet.CoreV1().Pods(namespace).Get(context.TODO(), podName, metav1.GetOptions{})
+
 	if errors.IsNotFound(err) {
 		fmt.Printf("Pod %s in namespace %s not found\n", podName, namespace)
 	} else if statusError, isStatus := err.(*errors.StatusError); isStatus {
@@ -82,7 +83,6 @@ func main() {
 		fmt.Printf("Found pod %s in namespace %s\n", podName, namespace)
 		containers := pod.Spec.Containers
 		appContainer, _ := GetAppContainer(containers)
-
 		var tags []string
 		imageName, shortImage, imageTag, err := learnK8SContainer.SplitImageName(appContainer.Image)
 		if err != nil {
@@ -106,7 +106,8 @@ func main() {
 		//fmt.Printf("cloud_provider:alibaba")
 
 		tags = append(tags, "display_container_name:" + fmt.Sprintf("%s_%s", appContainer.Name, pod.Name))
-		tags = append(tags, "container_name:" + appContainer.Name)
+		tags = append(tags, "kube_container_name:" + appContainer.Name)
+		tags = append(tags, "container_id:" + getContainerIdByName(appContainer.Name, pod))
 		tags = append(tags, "image_name:" + imageName)
 		tags = append(tags, "short_image:" + shortImage)
 		tags = append(tags, "image_tag:" + imageTag)
@@ -145,4 +146,13 @@ func GetAppContainer(containers []v1.Container) (v1.Container, error) {
 		}
 	}
 	return containers[0], goError.New("could not find App container")
+}
+
+func getContainerIdByName(containerName string, pod *v1.Pod) string {
+	for _, c := range pod.Status.ContainerStatuses {
+		if c.Name == containerName {
+			return c.ContainerID
+		}
+	}
+	return ""
 }
