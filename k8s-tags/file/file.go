@@ -58,7 +58,7 @@ func PrintFilesInDirectory()  {
 	}
 
 	for _, f := range files {
-		fmt.Println(f.Name() +"\n")
+		fmt.Println(f.Name())
 	}
 }
 
