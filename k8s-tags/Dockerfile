@@ -16,5 +16,7 @@ COPY --from=build-env /k8s-tags /usr/local/bin/k8s-tags
 RUN chmod +x /usr/local/bin/k8s-tags
 COPY output-datadog.conf .
 RUN mkdir "dd-output-config"
+COPY parsers.conf /dd-output-config
+COPY fluent-bit.conf /dd-output-config
 
 ENTRYPOINT ["k8s-tags"]

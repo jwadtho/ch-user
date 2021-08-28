@@ -121,9 +121,6 @@ func main() {
 			//learnK8SFile.AppendFile(strings.Join(tags, ","), fileName)
 			learnK8SFile.CreateDirectoryIfNotExists(outputFolder)
 			learnK8SFile.WriteFile(outputFolder+"/"+fileName, learnK8SFile.ReadFile(strings.Join(tags, ","), fileName))
-			learnK8SFile.CreateACopyOfFile("parsers.conf", outputFolder+"/"+"parsers.conf")
-			learnK8SFile.CreateACopyOfFile("fluent-bit.conf", outputFolder+"/"+"fluent-bit.conf")
-
 		} else {
 			learnK8SFile.GetCurrentDirectory()
 			learnK8SFile.PrintFilesInDirectory()

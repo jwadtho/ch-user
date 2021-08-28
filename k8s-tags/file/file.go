@@ -24,10 +24,10 @@ func ReadFile(tags string, filename string) string {
 	if err != nil {
 		log.Panicf("failed reading data from file: %s", err)
 	}
-	fmt.Printf("\nLength: %d bytes", len(data))
+	fmt.Printf("\nLength: %d bytes, file:%s\n", len(data), filename)
 
 	//fmt.Printf("\nData: %s", data)
-	fmt.Printf("\nError: %v", err)
+	//fmt.Printf("\nError: %v", err)
 
 	contents := string(data)
 	contents += tags
