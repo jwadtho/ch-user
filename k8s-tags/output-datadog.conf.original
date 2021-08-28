@@ -1,0 +1,10 @@
+[OUTPUT]
+    Name           datadog
+    Match          *
+    Host           http-intake.logs.datadoghq.com
+    TLS            on
+    compress       gzip
+    dd_source      ${DD_SOURCE}
+    dd_service     ${DD_SERVICE}
+    apikey         DATADOG_API_KEY
+    dd_tags        xom_org:flcit,xom_env:dev,xom_app_name:China OneConnect,xom_app_id:APP-12070,xom_hosting_env:alibaba,xom_hosting_type:paas,xom_app_support_group:tocomplete,occ_service_domain:${OCC_SERVICE_DOMAIN},environment:${DD_ENV},env:${DD_ENV}

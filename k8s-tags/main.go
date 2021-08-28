@@ -19,7 +19,7 @@ import (
 	"strings"
 )
 
-const fileName = "output-stdout.conf"
+const fileName = "output-datadog.conf"
 
 var config *rest.Config
 var clientSet *kubernetes.Clientset
