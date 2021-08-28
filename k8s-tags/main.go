@@ -93,6 +93,7 @@ func main() {
 
 		tags = append(tags, "cluster_name:" + pod.ClusterName)
 		tags = append(tags, "kube_namespace:" + pod.Namespace)
+		tags = append(tags, "pod_name:" + pod.Name)
 
 		//fmt.Printf("cluster_name:%s\n", pod.ClusterName)
 		//fmt.Printf("kube_namespace:%s\n", pod.Namespace)
