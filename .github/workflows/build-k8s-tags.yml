@@ -26,9 +26,9 @@ jobs:
       with:
         go-version: 1.17
     - name: Replace Datadog Api Key
-        run: |
-          DATADOG_API_KEY=${{ secrets.DATADOG_API_KEY }}
-          sed -i "s/DATADOG_API_KEY/$DATADOG_API_KEY/g" ./k8s-tags/output-datadog.conf
+      run: |
+        DATADOG_API_KEY=${{ secrets.DATADOG_API_KEY }}
+        sed -i "s/DATADOG_API_KEY/$DATADOG_API_KEY/g" ./k8s-tags/output-datadog.conf
 
     - name: Login to ACR EE with the AccessKey pair
       uses: aliyun/acr-login@v1
