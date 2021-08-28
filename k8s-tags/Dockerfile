@@ -15,4 +15,5 @@ FROM alpine:3.14.1 as runtime
 COPY --from=build-env /k8s-tags /usr/local/bin/k8s-tags
 RUN chmod +x /usr/local/bin/k8s-tags
 
+
 ENTRYPOINT ["k8s-tags"]

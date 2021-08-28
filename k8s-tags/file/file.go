@@ -50,3 +50,22 @@ func AppendFile(tags string, filename string) {
 	fmt.Printf("\nLength: %d bytes", len)
 	fmt.Printf("\nFile Name: %s", file.Name())
 }
+
+func PrintFilesInDirectory()  {
+	files, err := ioutil.ReadDir("./")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, f := range files {
+		fmt.Println(f.Name() +"\n")
+	}
+}
+
+func GetCurrentDirectory()  {
+	path, err := os.Getwd()
+	if err != nil {
+		log.Println(err)
+	}
+	fmt.Println("Current DIR:" +path)
+}
