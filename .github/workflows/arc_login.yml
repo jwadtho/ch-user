@@ -51,7 +51,4 @@ jobs:
         run: |
           SECRETJSON=$(aliyun kms GetAuthorizationToken --RegionId cn-shanghai --InstanceId cri-3fynibeigjxpi5o6)
           echo "JSON:$SECRETJSON"
-          #PASSWORD=$(echo "$SECRETJSON" | jq '.SecretData | fromjson.AccountPassword')
-          #BASE64_PASSWORD=$(echo $PASSWORD | base64 -w 0)
-          #cp kubernetes/dbSecret.yml kubernetes/dbSecret_dev.yml
-          #sed -i "s/BASE64_PASSWORD/$BASE64_PASSWORD/g" ./kubernetes/dbSecret_dev.ym
+          
