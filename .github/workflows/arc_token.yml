@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: ACR Login
+name: ACR Token
 
 # Controls when the workflow will run
 on:
@@ -48,7 +48,11 @@ jobs:
           access-key-secret: "${{ secrets.ALICLOUD_SECRET_KEY }}"
           region: "${{ env.REGION_ID }}"
           
-      - name: Login
+          
+      - name: Aliyun help
+        run: aliyin help
+          
+      - name: Get Token
         run: |
           SECRETJSON=$(aliyun kms GetAuthorizationToken --RegionId cn-shanghai --InstanceId cri-3fynibeigjxpi5o6)
           echo "JSON:$SECRETJSON"
