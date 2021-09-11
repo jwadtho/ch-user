@@ -54,6 +54,6 @@ jobs:
           
       - name: Get Token
         run: |
-          SECRETJSON=$(aliyun kms GetAuthorizationToken --RegionId cn-shanghai --InstanceId cri-3fynibeigjxpi5o6)
+          SECRETJSON=$(aliyun cr GetAuthorizationToken --RegionId cn-shanghai --InstanceId cri-3fynibeigjxpi5o6)
           echo "JSON:$SECRETJSON"
           
