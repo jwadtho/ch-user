@@ -16,6 +16,7 @@ on:
 env:
   REGION_ID: cn-shanghai
   ACR_EE_INSTANCE_ID: cri-3fynibeigjxpi5o6
+  ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
