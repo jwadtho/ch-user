@@ -50,7 +50,7 @@ jobs:
           
           
       - name: Aliyun help
-        run: aliyun help
+        run: aliyun help cr GetAuthorizationToken
           
       - name: Get Token
         run: |
