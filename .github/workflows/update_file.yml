@@ -43,9 +43,9 @@ jobs:
           fi
          
 
-#       - name: Update resources
-#         uses: test-room-7/action-update-file@v1
-#         with:
-#             file-path: dd-trace-dotnet-version.txt
-#             commit-msg: Update resources
-#             github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Update resources
+        uses: test-room-7/action-update-file@v1
+        with:
+            file-path: dd-trace-dotnet-version.txt
+            commit-msg: Update resources
+            github-token: ${{ secrets.GITHUB_TOKEN }}
