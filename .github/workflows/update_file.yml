@@ -32,12 +32,20 @@ jobs:
       - name: Fetch resources
         run: |
           TRACER_VERSION=$(curl -s https://api.github.com/repos/DataDog/dd-trace-dotnet/releases/latest | grep tag_name | cut -d '"' -f 4 | cut -c2-)
-          echo "Verion is $TRACER_VERSION"
-          echo $TRACER_VERSION > dd-trace-dotnet-version.txt
+          TRACER_VERSION_FROM_FILE=$(cat dd-trace-dotnet-version.txt)
+          echo "Version from web: $TRACER_VERSION"
+          echo "Version from file: $TRACER_VERSION_FROM_FILE"
+          if [ "$TRACER_VERSION" = "$TRACER_VERSION_FROM_FILE" ]; then
+            echo "The version from web and from the fole are equal. No need to update."
+          else
+              echo "The version from web and from the fole are equal. Need to update the version"
+               echo $TRACER_VERSION > dd-trace-dotnet-version.txt
+          fi
+         
 
-      - name: Update resources
-        uses: test-room-7/action-update-file@v1
-        with:
-            file-path: dd-trace-dotnet-version.txt
-            commit-msg: Update resources
-            github-token: ${{ secrets.GITHUB_TOKEN }}
+#       - name: Update resources
+#         uses: test-room-7/action-update-file@v1
+#         with:
+#             file-path: dd-trace-dotnet-version.txt
+#             commit-msg: Update resources
+#             github-token: ${{ secrets.GITHUB_TOKEN }}
