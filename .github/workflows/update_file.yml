@@ -30,7 +30,10 @@ jobs:
         run: echo Hello, world!
 
       - name: Fetch resources
-        run: curl -s https://api.github.com/repos/DataDog/dd-trace-dotnet/releases/latest | grep tag_name | cut -d '"' -f 4 | cut -c2-
+        run: |
+          $version=$(curl -s https://api.github.com/repos/DataDog/dd-trace-dotnet/releases/latest | grep tag_name | cut -d '"' -f 4 | cut -c2-)
+          echo "Verion is $verion"
+          echo $version > dd-trace-dotnet-version.txt
 
       - name: Update resources
         uses: test-room-7/action-update-file@v1
