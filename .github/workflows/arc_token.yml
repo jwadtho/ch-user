@@ -22,7 +22,7 @@ env:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  acr:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -58,3 +58,30 @@ jobs:
           SECRETJSON=$(aliyun cr GetAuthorizationToken --RegionId cn-shanghai --InstanceId cri-3fynibeigjxpi5o6)
           echo "JSON:$SECRETJSON"
           
+  updater-version:
+    needs: acr
+
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      - name: Fetch resources
+        run: |
+          TRACER_VERSION=$(curl -s https://api.github.com/repos/DataDog/dd-trace-dotnet/releases/latest | grep tag_name | cut -d '"' -f 4 | cut -c2-)
+          echo "Verion is $TRACER_VERSION"
+          echo $TRACER_VERSION > dd-trace-dotnet-version.txt
+
+      - name: Update resources
+        uses: test-room-7/action-update-file@v1
+        with:
+            file-path: dd-trace-dotnet-version.txt
+            commit-msg: Update resources
+            github-token: ${{ secrets.GITHUB_TOKEN }}
