@@ -11,7 +11,7 @@ env:
   ACR_EE_INSTANCE_ID: cri-3fynibeigjxpi5o6
   ACR_EE_NAMESPACE: datadog
   ACR_EE_IMAGE: agent
-  VERSION: 7.29.1
+  VERSION: "7.31.0"
   SOURCE_IMAGE: datadog/agent
 jobs:
   pull-push:
